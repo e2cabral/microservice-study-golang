@@ -14,6 +14,7 @@ func SetProductsRoutes(app *gin.Engine) {
 		products.GET("/", func(c *gin.Context) {
 			c.JSON(http.StatusOK, gin.H{
 				"message": "Hello, World!",
+				"test":    "Testing my terminal",
 			})
 		})
 	}
