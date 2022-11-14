@@ -21,3 +21,10 @@ func NewProductRepository() (*ProductRepository, error) {
 func (p ProductRepository) Create(product *entities.Product) {
 	p.handler.Create(&product)
 }
+
+func (p ProductRepository) Find(current int, limit int, products *[]entities.Product) {
+	p.handler.
+		Limit(limit).
+		Offset((current - 1) * limit).
+		Find(&products)
+}
