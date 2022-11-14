@@ -17,3 +17,16 @@ func (p ProductService) Create(product entities.Product) error {
 
 	return nil
 }
+
+func (p ProductService) Find(current int, limit int) ([]entities.Product, error) {
+	var products []entities.Product
+
+	repository, err := repositories.NewProductRepository()
+	if err != nil {
+		return nil, err
+	}
+
+	repository.Find(current, limit, &products)
+
+	return products, nil
+}
