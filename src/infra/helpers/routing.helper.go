@@ -1,9 +1,9 @@
 package helpers
 
 type Router struct {
-	Group string
+	Prefix string
 }
 
-func NewRouter(group string) *Router {
-	return &Router{Group: group}
+func NewRouter(prefix string) *Router {
+	return &Router{Prefix: prefix}
 }
