@@ -31,18 +31,22 @@ func Connect() (*gorm.DB, error) {
 		return nil, err
 	}
 
+	println("Database connected.")
+
 	return connection, nil
 }
 
 func Migrate(database *gorm.DB) error {
 	err := database.AutoMigrate(
-		entities.Product{},
-		entities.Review{},
-		entities.Category{},
+		&entities.Product{},
+		&entities.Review{},
+		&entities.Category{},
 	)
 	if err != nil {
 		return err
 	}
+
+	println("Tables have been migrated.")
 
 	return nil
 }
