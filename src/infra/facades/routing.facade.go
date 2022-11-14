@@ -1,10 +1,10 @@
 package facades
 
 import (
-	"github.com/gin-gonic/gin"
+	"github.com/gorilla/mux"
 	"microservice-golang/src/main/routes"
 )
 
-func StartRoutingSystem(app *gin.Engine) {
+func StartRoutingSystem(app *mux.Router) {
 	routes.SetProductsRoutes(app)
 }

@@ -1,20 +1,15 @@
 package routes
 
 import (
-	"github.com/gin-gonic/gin"
+	"github.com/gorilla/mux"
 	"microservice-golang/src/infra/helpers"
-	"net/http"
+	"microservice-golang/src/presentation/controllers"
 )
 
-func SetProductsRoutes(app *gin.Engine) {
+func SetProductsRoutes(app *mux.Router) {
 	router := helpers.NewRouter("/products")
 
-	products := app.Group(router.Group)
-	{
-		products.GET("/", func(c *gin.Context) {
-			c.JSON(http.StatusOK, gin.H{
-				"message": "Hello, World!",
-			})
-		})
-	}
+	sub := app.PathPrefix(router.Prefix).Subrouter()
+
+	sub.HandleFunc("/", controllers.Create).Methods("POST")
 }

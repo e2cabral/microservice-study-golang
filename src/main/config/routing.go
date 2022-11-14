@@ -1,10 +1,10 @@
 package config
 
 import (
-	"github.com/gin-gonic/gin"
+	"github.com/gorilla/mux"
 	"microservice-golang/src/infra/facades"
 )
 
-func StartRouting(router *gin.Engine) {
+func StartRouting(router *mux.Router) {
 	facades.StartRoutingSystem(router)
 }

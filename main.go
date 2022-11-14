@@ -1,21 +1,23 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
+	"github.com/gorilla/mux"
 	"log"
 	"microservice-golang/src/infra/database"
 	"microservice-golang/src/main/config"
+	"net/http"
 )
 
 func main() {
-	if err := database.InitializeDatabaseConnection(); err != nil {
-		log.Fatal(err.Error())
-	}
-	app := gin.Default()
+	app := mux.NewRouter()
 
 	config.StartRouting(app)
 
-	if err := app.Run(":3000"); err != nil {
+	if err := database.InitializeDatabaseConnection(); err != nil {
+		log.Fatal(err.Error())
+	}
+
+	if err := http.ListenAndServe(":3000", app); err != nil {
 		log.Fatal(err)
 	}
 }
