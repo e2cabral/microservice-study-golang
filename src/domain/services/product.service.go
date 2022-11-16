@@ -30,3 +30,14 @@ func (p ProductService) Find(current int, limit int) ([]entities.Product, error)
 
 	return products, nil
 }
+
+func (p ProductService) Update(product entities.Product, id int) error {
+	repository, err := repositories.NewProductRepository()
+	if err != nil {
+		return err
+	}
+
+	repository.Update(&product, id)
+
+	return nil
+}
