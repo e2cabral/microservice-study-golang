@@ -1,8 +1,11 @@
 package services
 
 import (
+	"errors"
 	"microservice-golang/src/data/repositories"
 	"microservice-golang/src/domain/entities"
+	"microservice-golang/src/infra/helpers"
+	"strconv"
 )
 
 type ProductService struct{}
@@ -42,15 +45,20 @@ func (p ProductService) Update(product entities.Product, id int) error {
 	return nil
 }
 
-func (p ProductService) FindOne(id int) (*entities.Product, error) {
+func (p ProductService) FindOne(id string) (*entities.Product, error) {
+	if helpers.IsEmpty(id) {
+		return nil, errors.New("null parameter: You should provide an Id")
+	}
 	var product entities.Product
+
+	convertedId, err := strconv.Atoi(id)
 
 	repository, err := repositories.NewProductRepository()
 	if err != nil {
 		return nil, err
 	}
 
-	repository.FindOne(id, &product)
+	repository.FindOne(convertedId, &product)
 
 	return &product, nil
 }
