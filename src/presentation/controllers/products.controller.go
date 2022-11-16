@@ -28,7 +28,7 @@ func Create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	response.Ok(w, &product)
+	response.Ok(w, models.EntityToModel(&product))
 }
 
 func Find(w http.ResponseWriter, r *http.Request) {
@@ -56,7 +56,13 @@ func Find(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	response.Ok(w, products)
+	var modelProducts []models.Product
+
+	for _, element := range products {
+		modelProducts = append(modelProducts, models.EntityToModel(&element))
+	}
+
+	response.Ok(w, modelProducts)
 }
 
 func Update(w http.ResponseWriter, r *http.Request) {
@@ -64,17 +70,11 @@ func Update(w http.ResponseWriter, r *http.Request) {
 
 	response := helpers.Response{}
 
-	vars := mux.Vars(r)
-
-	id, err := strconv.Atoi(vars["id"])
-	if err != nil {
-		response.InternalServerError(w, err.Error())
-		return
-	}
+	id := mux.Vars(r)["id"]
 
 	service := services.ProductService{}
 
-	err = helpers.FromJSON(r.Body, &product)
+	err := helpers.FromJSON(r.Body, &product)
 	if err != nil {
 		response.InternalServerError(w, err.Error())
 		return
@@ -85,7 +85,7 @@ func Update(w http.ResponseWriter, r *http.Request) {
 		response.InternalServerError(w, err.Error())
 	}
 
-	response.Ok(w, product)
+	response.Ok(w, models.EntityToModel(&product))
 }
 
 func FindOne(w http.ResponseWriter, r *http.Request) {
@@ -101,5 +101,10 @@ func FindOne(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	response.Ok(w, product)
+	if product.ID == 0 {
+		response.Ok(w, nil)
+		return
+	}
+
+	response.Ok(w, models.EntityToModel(product))
 }
