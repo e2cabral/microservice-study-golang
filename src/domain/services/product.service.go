@@ -2,8 +2,8 @@ package services
 
 import (
 	"errors"
+	"microservice-golang/src/data/entities"
 	"microservice-golang/src/data/repositories"
-	"microservice-golang/src/domain/entities"
 	"microservice-golang/src/infra/helpers"
 	"strconv"
 )

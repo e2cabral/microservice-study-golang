@@ -2,7 +2,8 @@ package controllers
 
 import (
 	"github.com/gorilla/mux"
-	"microservice-golang/src/domain/entities"
+	"microservice-golang/src/data/entities"
+	"microservice-golang/src/domain/models"
 	"microservice-golang/src/domain/services"
 	"microservice-golang/src/infra/helpers"
 	"net/http"

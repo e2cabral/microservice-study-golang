@@ -2,7 +2,7 @@ package repositories
 
 import (
 	"gorm.io/gorm"
-	"microservice-golang/src/domain/entities"
+	"microservice-golang/src/data/entities"
 	"microservice-golang/src/infra/database"
 )
 

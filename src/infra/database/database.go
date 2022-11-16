@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
-	"microservice-golang/src/domain/entities"
+	"microservice-golang/src/data/entities"
 	"microservice-golang/src/infra/helpers"
 )
 
