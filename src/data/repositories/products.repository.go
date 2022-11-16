@@ -28,3 +28,16 @@ func (p ProductRepository) Find(current int, limit int, products *[]entities.Pro
 		Offset((current - 1) * limit).
 		Find(&products)
 }
+
+func (p ProductRepository) Update(product *entities.Product, id int) {
+	p.handler.
+		Model(&product).
+		Where("id = ?", id).
+		Updates(
+			map[string]interface{}{
+				"price":       product.Price,
+				"name":        product.Name,
+				"description": product.Description,
+			},
+		)
+}
