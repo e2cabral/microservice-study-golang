@@ -41,3 +41,7 @@ func (p ProductRepository) Update(product *entities.Product, id int) {
 			},
 		)
 }
+
+func (p ProductRepository) FindOne(id int, product *entities.Product) {
+	p.handler.First(&product, id)
+}
