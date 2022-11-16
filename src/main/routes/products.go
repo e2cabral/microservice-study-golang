@@ -14,4 +14,5 @@ func SetProductsRoutes(app *mux.Router) {
 	sub.HandleFunc("", controllers.Find).Methods("GET")
 	sub.HandleFunc("", controllers.Create).Methods("POST")
 	sub.HandleFunc("/{id:[0-9]+}", controllers.Update).Methods("PATCH")
+	sub.HandleFunc("/{id:[0-9]+}", controllers.FindOne).Methods("GET")
 }
