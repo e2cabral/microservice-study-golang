@@ -8,7 +8,7 @@ type Response struct {
 	Status  int         `json:"status"`
 }
 
-func Ok(w http.ResponseWriter, data interface{}) {
+func (r Response) Ok(w http.ResponseWriter, data interface{}) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
 	response := Response{
@@ -19,7 +19,7 @@ func Ok(w http.ResponseWriter, data interface{}) {
 	ToJSON(w, response)
 }
 
-func Forbidden(w http.ResponseWriter, message string) {
+func (r Response) Forbidden(w http.ResponseWriter, message string) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusForbidden)
 	response := Response{
@@ -30,7 +30,7 @@ func Forbidden(w http.ResponseWriter, message string) {
 	ToJSON(w, response)
 }
 
-func NotFound(w http.ResponseWriter, message string) {
+func (r Response) NotFound(w http.ResponseWriter, message string) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusNotFound)
 	response := Response{
@@ -41,7 +41,7 @@ func NotFound(w http.ResponseWriter, message string) {
 	ToJSON(w, response)
 }
 
-func InternalServerError(w http.ResponseWriter, message string) {
+func (r Response) InternalServerError(w http.ResponseWriter, message string) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusInternalServerError)
 	response := Response{

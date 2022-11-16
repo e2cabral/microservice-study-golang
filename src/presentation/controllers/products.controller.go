@@ -11,36 +11,39 @@ import (
 
 func Create(w http.ResponseWriter, r *http.Request) {
 	var product entities.Product
+	response := helpers.Response{}
 
 	service := services.ProductService{}
 
 	err := helpers.FromJSON(r.Body, &product)
 	if err != nil {
-		helpers.InternalServerError(w, err.Error())
+		response.InternalServerError(w, err.Error())
 		return
 	}
 
 	err = service.Create(product)
 	if err != nil {
-		helpers.InternalServerError(w, err.Error())
+		response.InternalServerError(w, err.Error())
 		return
 	}
 
-	helpers.Ok(w, &product)
+	response.Ok(w, &product)
 }
 
 func Find(w http.ResponseWriter, r *http.Request) {
+	response := helpers.Response{}
+
 	query := r.URL.Query()
 
 	current, err := strconv.Atoi(query.Get("current"))
 	if err != nil {
-		helpers.InternalServerError(w, err.Error())
+		response.InternalServerError(w, err.Error())
 		return
 	}
 
 	limit, err := strconv.Atoi(query.Get("limit"))
 	if err != nil {
-		helpers.InternalServerError(w, err.Error())
+		response.InternalServerError(w, err.Error())
 		return
 	}
 
@@ -48,20 +51,23 @@ func Find(w http.ResponseWriter, r *http.Request) {
 
 	products, err := service.Find(current, limit)
 	if err != nil {
-		helpers.InternalServerError(w, err.Error())
+		response.InternalServerError(w, err.Error())
 		return
 	}
 
-	helpers.Ok(w, products)
+	response.Ok(w, products)
 }
 
 func Update(w http.ResponseWriter, r *http.Request) {
 	var product entities.Product
+
+	response := helpers.Response{}
+
 	vars := mux.Vars(r)
 
 	id, err := strconv.Atoi(vars["id"])
 	if err != nil {
-		helpers.InternalServerError(w, err.Error())
+		response.InternalServerError(w, err.Error())
 		return
 	}
 
@@ -69,33 +75,30 @@ func Update(w http.ResponseWriter, r *http.Request) {
 
 	err = helpers.FromJSON(r.Body, &product)
 	if err != nil {
-		helpers.InternalServerError(w, err.Error())
+		response.InternalServerError(w, err.Error())
 		return
 	}
 
 	err = service.Update(product, id)
 	if err != nil {
-		helpers.InternalServerError(w, err.Error())
+		response.InternalServerError(w, err.Error())
 	}
 
-	helpers.Ok(w, product)
+	response.Ok(w, product)
 }
 
 func FindOne(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-	service := services.ProductService{}
+	id := mux.Vars(r)["id"]
 
-	id, err := strconv.Atoi(vars["id"])
-	if err != nil {
-		helpers.InternalServerError(w, err.Error())
-		return
-	}
+	response := helpers.Response{}
+
+	service := services.ProductService{}
 
 	product, err := service.FindOne(id)
 	if err != nil {
-		helpers.InternalServerError(w, err.Error())
+		response.InternalServerError(w, err.Error())
 		return
 	}
 
-	helpers.Ok(w, product)
+	response.Ok(w, product)
 }
