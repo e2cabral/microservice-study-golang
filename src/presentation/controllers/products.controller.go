@@ -80,3 +80,22 @@ func Update(w http.ResponseWriter, r *http.Request) {
 
 	helpers.Ok(w, product)
 }
+
+func FindOne(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	service := services.ProductService{}
+
+	id, err := strconv.Atoi(vars["id"])
+	if err != nil {
+		helpers.InternalServerError(w, err.Error())
+		return
+	}
+
+	product, err := service.FindOne(id)
+	if err != nil {
+		helpers.InternalServerError(w, err.Error())
+		return
+	}
+
+	helpers.Ok(w, product)
+}
