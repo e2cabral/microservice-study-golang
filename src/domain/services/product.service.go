@@ -41,3 +41,16 @@ func (p ProductService) Update(product entities.Product, id int) error {
 
 	return nil
 }
+
+func (p ProductService) FindOne(id int) (*entities.Product, error) {
+	var product entities.Product
+
+	repository, err := repositories.NewProductRepository()
+	if err != nil {
+		return nil, err
+	}
+
+	repository.FindOne(id, &product)
+
+	return &product, nil
+}
